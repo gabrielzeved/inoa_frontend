@@ -1,0 +1,43 @@
+.stock-tablayout-container{
+  padding: 16px;
+  background-color: $background-200;
+  border-radius: 5px;
+  box-shadow: $shadow-sm;
+  width: 100%;
+}
+
+.stock-tablayout-options{
+  display: flex;
+}
+
+.stock-tablayout-option{
+  color: $gray-300;
+  font-weight: 600;
+  margin: 0 16px;
+  padding: 4px 0;
+
+  transition: all 0.2s ease;
+  cursor: pointer;
+  &:hover{
+    color: $gray-600;
+  }
+}
+
+.stock-tablayout-option--active{
+  position: relative;
+  color: $gray-800 !important;
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: $action;
+    border-radius: 5px;
+    left: 0;
+  }
+}
+
+.stock-tablayout-content{
+  margin-top: 16px;
+}

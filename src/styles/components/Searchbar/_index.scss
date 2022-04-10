@@ -1,0 +1,32 @@
+@import "./Autocomplete/index";
+
+.searchbar-wrapper{
+  display: flex;
+  width: 100%;
+  max-width: 360px;
+  border: 1px solid $gray-200;
+  background-color: $background-200;
+  border-radius: 5px;
+  overflow: hidden;
+  &:focus-within{
+    outline: none;
+    border: 1px solid $focus;
+  }
+  position: relative;
+}
+
+.searchbar-input{
+  padding: 12px 16px;
+  outline: none;
+  width: 100%;
+  border: 0;
+}
+
+.searchbar-icon{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 8px;
+  line-height: 0;
+  color: $gray-800;
+}

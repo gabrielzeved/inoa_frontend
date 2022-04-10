@@ -1,0 +1,64 @@
+.autocomplete-wrapper{
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba($color: #000000, $alpha: 0.3);
+  backdrop-filter: blur(2px);
+  z-index: 999;
+  margin-top: 70px;
+
+  overflow: hidden;
+
+  opacity: 0;
+  transition: all 0.3s ease;
+  &--open{
+    opacity: 1;
+    .autocomplete-container{
+      opacity: 1 !important;  
+    }
+    .autocomplete-element{
+      opacity: 1 !important;
+      transform: translateX(0) !important;
+    }
+  }
+
+  .autocomplete-container{
+    width: 100%;
+    margin: 0 auto;
+    max-width: 500px;
+    border-radius: 0 0 20px 20px;
+    background-color: white;
+    min-height: 200px;
+    max-height: 500px;
+    margin-top: -5px;
+    padding: 32px 16px;
+    b{
+      font-weight: bolder;
+    }
+
+    opacity: 0;
+    transition: all 0.2s ease;
+    transition-delay: 50ms;
+  }
+  
+  .autocomplete-element{
+    padding: 8px;
+    cursor: pointer;
+    opacity: 0;
+
+    transition: opacity, transform 0.35s ease;
+    opacity: 0.2;
+    transition-delay: 100ms;
+    transform: translateX(50%);
+
+    &:hover{
+      background-color: $background-100;
+      color: $focus;
+    }
+
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}n) {
+          transition-delay: #{$i * 25}ms;
+      }
+    }
+  }
+}
