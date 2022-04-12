@@ -1,0 +1,9 @@
+.searchbar-button{
+  min-width: 70px;
+  border-radius: 0 4px 4px 0;
+  background-color: $action;
+  color: white;
+  height: 100%;
+  cursor: pointer;
+  @extend .grid-center;
+}

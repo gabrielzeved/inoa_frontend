@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import InoaService from "../services/InoaService";
 import { StockSearchElement } from "../typings/stock";
-interface UseSearchProps {
+interface UseAutocompleteProps {
   term: string;
 }
 
-const useSearch = ({ term }: UseSearchProps) => {
+const useAutocomplete = ({ term }: UseAutocompleteProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [results, setResults] = useState<StockSearchElement[]>([]);
   const [timeout, setTimeout] = useState<number>(0);
@@ -28,4 +28,4 @@ const useSearch = ({ term }: UseSearchProps) => {
   return { loading, results };
 };
 
-export default useSearch;
+export default useAutocomplete;

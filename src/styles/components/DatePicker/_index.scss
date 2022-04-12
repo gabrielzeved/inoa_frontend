@@ -38,21 +38,20 @@
   .datepicker-helper{
     position: absolute;
   
-    max-width: 0;
-    max-height: 0;
-    transition: all ease 0.5s;
+    transform: scale(0);
+    transform-origin: top center;
+    transition: transform cubic-bezier(1, 0, 0, 1) 0.25s;
 
     overflow: hidden;
     margin-left: 16px;
-    top: 0;
-    left: 100%;
+    top: 100%;
+    margin-top: 18px;
     box-shadow: $shadow-xl;
   }
 
   &--open{
     .datepicker-helper{
-      max-width: 90vw;
-      max-height: unset;
+      transform: scale(1);
     }
   }
 

@@ -1,9 +1,12 @@
+import { SearchContextProvider } from "../../contexts/SearchContext";
 import SearchBar from "../SearchBar"
 
 const Header = () => {
   return (
     <header className='main-header'>
-      <SearchBar />
+      <SearchContextProvider>
+        <SearchBar />
+      </SearchContextProvider>
     </header>
   )
 }

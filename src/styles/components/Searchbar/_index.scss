@@ -1,9 +1,11 @@
 @import "./Autocomplete/index";
+@import "./Button/index";
 
 .searchbar-wrapper{
   display: flex;
+  justify-content: space-between;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   border: 1px solid $gray-200;
   background-color: $background-200;
   border-radius: 5px;
@@ -20,13 +22,5 @@
   width: 100%;
   border: 0;
   border-radius: 5px;
-}
-
-.searchbar-icon{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 8px;
-  line-height: 0;
-  color: $gray-800;
+  flex-grow: 1;
 }

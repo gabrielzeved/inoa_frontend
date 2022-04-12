@@ -1,4 +1,5 @@
-import useSearch from "../../../hooks/useSearch";
+import { useSearchContext } from "../../../contexts/SearchContext";
+import useAutocomplete from "../../../hooks/useAutocomplete";
 import { StockSearchElement } from "../../../typings/stock";
 import Spinner from "../../Spinner";
 
@@ -14,11 +15,13 @@ const Autocomplete = ({
   inputRef
 } : AutocompleteProps) => {
 
-  const {loading, results} = useSearch({term});
+  const {loading, results} = useAutocomplete({term});
+  const {setTerm} = useSearchContext();
 
   const onSelect = (el : StockSearchElement) => {
     if(inputRef.current){
       inputRef.current.value = el.symbol
+      setTerm(el.symbol);
     }
   }
 

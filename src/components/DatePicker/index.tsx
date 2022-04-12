@@ -1,17 +1,11 @@
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { Calendar } from "react-modern-calendar-datepicker";
+import { Calendar, utils } from "react-modern-calendar-datepicker";
 import { useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useClickOutside";
-
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+import { useSearchContext } from "../../contexts/SearchContext";
 
 const DatePicker = () => {
-  const [selectedDayRange, setSelectedDayRange] = useState<any>({
-    from: null,
-    to: null
-  });
+  const {selectedRange, setSelectedRange} = useSearchContext();
 
   const [open, setOpen] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -30,14 +24,15 @@ const DatePicker = () => {
   return (
     <div onClick={() => {setOpen(true)}} className={`datepicker-wrapper ${open ? 'datepicker-wrapper--open' : ''}`}>
       
-      <span className="datepicker-from">{parseSelectedDate(selectedDayRange.from)}</span>
-      <span className="datepicker-to">{parseSelectedDate(selectedDayRange.to)}</span>
+      <span className="datepicker-from">{parseSelectedDate(selectedRange.from)}</span>
+      <span className="datepicker-to">{parseSelectedDate(selectedRange.to)}</span>
 
       <div ref={ref} className="datepicker-helper">
         <Calendar
-          value={selectedDayRange}
-          onChange={setSelectedDayRange}
+          value={selectedRange as any}
+          onChange={setSelectedRange as any}
           shouldHighlightWeekends
+          maximumDate={utils('en').getToday()}
         />
       </div>
 

@@ -4,6 +4,7 @@ import StockTabLayout from "../StockTabLayout";
 import StockCard, { StockCardProps } from "../StockCard";
 import Graph from "../Graph";
 import DatePicker from "../DatePicker";
+import { StockContextProvider } from "../../contexts/StockContext";
 
 const Layout = () => {
 
@@ -50,7 +51,7 @@ const Layout = () => {
   
 
   return (
-    <>
+    <StockContextProvider>
       <Header />
       <section className='layout-section'>
         <StockTabLayout items={tabLayoutMock} />
@@ -60,7 +61,7 @@ const Layout = () => {
         </section>
 
       </section>
-    </>
+    </StockContextProvider>
   )
 }
 
