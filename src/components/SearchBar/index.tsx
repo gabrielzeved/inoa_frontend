@@ -1,6 +1,7 @@
 import { faCaretDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Ref, useRef, useState } from "react";
+import DatePicker from "../DatePicker";
 import Autocomplete from "./Autocomplete";
 
 const SearchBar = () => {
@@ -24,7 +25,7 @@ const SearchBar = () => {
     <>
       <div className='searchbar-wrapper'>
         <input ref={inputRef} onFocus={handleInputFocus} onBlur={handleInputBlur} onChange={changeHandle} type="text" className='searchbar-input' />
-        <FontAwesomeIcon className='searchbar-icon' icon={faMagnifyingGlass} />
+        <DatePicker />
       </div>
       <Autocomplete inputRef={inputRef} term={term} open={isOpen} />
     </>

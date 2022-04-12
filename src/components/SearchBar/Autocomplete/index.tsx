@@ -1,4 +1,5 @@
-import useSearch, { SearchElement } from "../../../hooks/useSearch";
+import useSearch from "../../../hooks/useSearch";
+import { StockSearchElement } from "../../../typings/stock";
 import Spinner from "../../Spinner";
 
 interface AutocompleteProps {
@@ -15,9 +16,9 @@ const Autocomplete = ({
 
   const {loading, results} = useSearch({term});
 
-  const onSelect = (el : SearchElement) => {
+  const onSelect = (el : StockSearchElement) => {
     if(inputRef.current){
-      inputRef.current.value = el.name
+      inputRef.current.value = el.symbol
     }
   }
 
@@ -35,11 +36,20 @@ const Autocomplete = ({
     <div className={`autocomplete-wrapper ${open ? 'autocomplete-wrapper--open' : ''}`}>
       <div className='autocomplete-container'>
         <ul className='autocomplete-list'>
+          
           {results && results.slice(0, 10).map((item) => {
             return (
-              <li onClick={() => {onSelect(item)} }className='autocomplete-element'>{item.name}</li>
+              <li onClick={() => {onSelect(item)} }className='autocomplete-element'>
+                <span className='autocomplete-symbol'>{item.symbol}</span>
+                <span className='autocomplete-name'>{item.name}</span>
+              </li>
             )
           })}
+
+          {(!results || results.length <= 0) && 
+            <span className='autocomplete-empty'>Não há resultados para sua pesquisa</span>
+          }
+
         </ul>
       </div>  
     </div>

@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 export default class InoaService {
   private static url = "http://localhost:3333";
@@ -8,6 +8,18 @@ export default class InoaService {
       await axios.get(this.url + "/search", {
         params: {
           term,
+        },
+      })
+    ).data;
+  }
+
+  static async stockCandle(symbol: string, from: Date, to: Date) {
+    return (
+      await axios.get(this.url + "/", {
+        params: {
+          symbol,
+          from,
+          to,
         },
       })
     ).data;

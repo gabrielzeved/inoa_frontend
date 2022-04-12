@@ -1,0 +1,59 @@
+.datepicker-wrapper{
+  position: relative;
+  height: 100%;
+
+  @extend .flex-center;
+  
+  .datepicker-from, .datepicker-to{
+    @extend .flex-center;
+
+    padding: 0 8px;
+    color: $gray-400;
+    font-size: 14px;
+    min-width: 75px;
+    text-align: center;
+    height: 100%;
+    border-left: 1px solid $gray-200;
+    position: relative;
+    &::before{
+      content: 'Até: ';
+      top: 2px;
+      font-size: 10px;
+      position: absolute;
+    }
+  }
+
+  .datepicker-from{
+    &::before{
+      content: 'De: ';
+    }
+  }
+
+  .datepicker-to{
+    &::before{
+      content: 'Até: ';
+    }
+  }
+
+  .datepicker-helper{
+    position: absolute;
+  
+    max-width: 0;
+    max-height: 0;
+    transition: all ease 0.5s;
+
+    overflow: hidden;
+    margin-left: 16px;
+    top: 0;
+    left: 100%;
+    box-shadow: $shadow-xl;
+  }
+
+  &--open{
+    .datepicker-helper{
+      max-width: 90vw;
+      max-height: unset;
+    }
+  }
+
+}

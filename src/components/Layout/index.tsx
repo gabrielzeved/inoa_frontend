@@ -3,6 +3,7 @@ import Header from '../Header'
 import StockTabLayout from "../StockTabLayout";
 import StockCard, { StockCardProps } from "../StockCard";
 import Graph from "../Graph";
+import DatePicker from "../DatePicker";
 
 const Layout = () => {
 

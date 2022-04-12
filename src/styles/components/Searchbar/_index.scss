@@ -3,11 +3,10 @@
 .searchbar-wrapper{
   display: flex;
   width: 100%;
-  max-width: 360px;
+  max-width: 500px;
   border: 1px solid $gray-200;
   background-color: $background-200;
   border-radius: 5px;
-  overflow: hidden;
   &:focus-within{
     outline: none;
     border: 1px solid $focus;
@@ -20,6 +19,7 @@
   outline: none;
   width: 100%;
   border: 0;
+  border-radius: 5px;
 }
 
 .searchbar-icon{
