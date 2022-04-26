@@ -16,22 +16,6 @@
   align-items: center;
 }
 
-.stockcard-badge{
-  border-radius: 5px;
-  padding: 8px;
-  color: white;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.stockcard-badge-action{
-  background-color: $action;
-}
-
-.stockcard-badge-danger{
-  background-color: $danger;
-}
-
 .stockcard-title{
   color: #aaa;
   font-weight: 600;

@@ -1,34 +1,59 @@
 
+import { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts";
+import { useGraphContext } from "../../contexts/GraphContext";
+import { useStockContext } from "../../contexts/StockContext";
 
 const Graph = () => {
 
-  const options = {
+  
+  const {state: {symbol, stockInfo}} = useStockContext();
+  const { graphs } = useGraphContext();
+
+  const xAxis = stockInfo?.candle.timestamp?.map((item) => {
+    const date = new Date(item * 1000);
+    return date.toLocaleString('default', { day: "2-digit", month: 'short', year: "numeric" })
+  })
+
+  const options: ApexOptions = {
     chart: {
-      id: "basic-bar"
+      id: "basic-bar",
+      animations: {
+        easing: 'easeinout'
+      }
     },
     xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+      categories: xAxis
+    },
+    stroke: {
+      show: true,
+      curve: 'straight',
+      colors: undefined,
+      width: 2,
+      dashArray: 0,      
     }
   }
-  
+
   const series = [
     {
-      name: "series-1",
-      data: [30, 40, 45, 50, 49, 60, 70, 91]
+      name: symbol,
+      data: stockInfo?.candle.close || []
     },
-    {
-      name: "series-2",
-      data: [20, 30, 15, 80, 19, 30, 10, 21]
-    }
+    ...graphs.filter(item => !item.loading && item.data).map((item) => {
+      return {
+        name: item.name,
+        data: item.data?.close || []
+      }
+    })
   ]
 
   return (
     <Chart
       options={options}
       series={series}
-      type="bar"
-      width="500"
+      type="line"
+      width="100%"
+      height="500px"
     />
   )
 

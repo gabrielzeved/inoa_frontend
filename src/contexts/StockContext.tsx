@@ -1,11 +1,17 @@
+import { useEffect } from "react";
 import { createContext, Dispatch, useContext, useReducer, useState } from "react";
 import InoaService from "../services/InoaService";
 import { StockCandle } from "../typings/stock";
 
 interface StockContextState{
   loading: boolean,
+  symbol: string,
   stockInfo ?: {
     candle: StockCandle
+  },
+  date: {
+    from: Date,
+    to: Date
   }
 }
 
@@ -15,6 +21,15 @@ type StockContextAction = {
 } | {
   type: "SET_STOCK_CANDLE",
   value: StockCandle
+} | {
+  type: "SET_DATE",
+  value: {
+    from: Date,
+    to: Date
+  } 
+} | {
+  type: "SET_SYMBOL",
+  value: string
 }
 
 interface StockContextValues {
@@ -25,7 +40,12 @@ interface StockContextValues {
 
 const initialValues : StockContextState = {
   loading: false,
-  stockInfo: undefined
+  stockInfo: undefined,
+  symbol: "",
+  date: {
+    from: new Date(),
+    to: new Date()
+  }
 }
 
 const StockContext = createContext<StockContextValues>({} as StockContextValues);
@@ -38,13 +58,23 @@ const stockContextReducer = (state : StockContextState, action: StockContextActi
       return {
         ...state,
         stockInfo:{
-          candle: action.value
+          candle: value
         }
       }
     case "SET_LOADING":
       return {
         ...state,
-        loading: action.value
+        loading: value
+      }
+    case "SET_DATE": 
+      return {
+        ...state,
+        date: value
+      }
+    case "SET_SYMBOL":
+      return {
+        ...state,
+        symbol: value
       }
     default:
       return {
@@ -61,6 +91,7 @@ export const StockContextProvider : React.FC = ({
   const [state, dispatch] = useReducer(stockContextReducer, initialValues);
 
   const LoadStock = async (symbol: string, from: Date, to: Date) => {
+    dispatch({type: "SET_SYMBOL", value: symbol});
     dispatch({type: "SET_LOADING", value: true})
     const data = await InoaService.stockCandle(symbol, from, to) as StockCandle;
     dispatch({type: "SET_STOCK_CANDLE", value: data})

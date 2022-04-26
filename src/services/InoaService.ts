@@ -18,8 +18,8 @@ export default class InoaService {
       await axios.get(this.url + "/", {
         params: {
           symbol,
-          from: from.getTime() / 1000,
-          to: to.getTime() / 1000,
+          from: Math.ceil(from.getTime() / 1000),
+          to: Math.ceil(to.getTime() / 1000),
         },
       })
     ).data;

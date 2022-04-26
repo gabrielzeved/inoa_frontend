@@ -1,0 +1,17 @@
+.badge{
+  border-radius: 5px;
+  padding: 8px;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  @extend .flex-center;
+  display: inline-flex;
+}
+
+.badge-action{
+  background-color: $action;
+}
+
+.badge-danger{
+  background-color: $danger;
+}

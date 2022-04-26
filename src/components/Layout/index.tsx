@@ -3,8 +3,10 @@ import Header from '../Header'
 import StockTabLayout from "../StockTabLayout";
 import StockCard, { StockCardProps } from "../StockCard";
 import Graph from "../Graph";
-import DatePicker from "../DatePicker";
 import { StockContextProvider } from "../../contexts/StockContext";
+import SelectedStocks from "../SelectedStocks";
+import { GraphContextProvider } from "../../contexts/GraphContext";
+import { SearchContextProvider } from "../../contexts/SearchContext";
 
 const Layout = () => {
 
@@ -57,7 +59,12 @@ const Layout = () => {
         <StockTabLayout items={tabLayoutMock} />
 
         <section className='layout-graph'>
-          <Graph />
+          <GraphContextProvider>
+            <SearchContextProvider>
+              <SelectedStocks />
+              <Graph />
+            </SearchContextProvider>
+          </GraphContextProvider>
         </section>
 
       </section>

@@ -1,4 +1,4 @@
-import styles from './styles.module.scss'
+import Badge from '../Badge'
 
 export interface StockCardProps{
   title: string,
@@ -21,9 +21,9 @@ const StockCard = ({
     <div className='stockcard-container'>
       <div className='stockcard-header'>
         <span className='stockcard-title'>{title}</span>
-        <span className={`stockcard-badge stockcard-badge-` + badge.color}>
+        <Badge {...badge}>
           {badge.text}
-        </span>
+        </Badge>
       </div>
 
       <h1 className='stockcard-value'>{value}</h1>
