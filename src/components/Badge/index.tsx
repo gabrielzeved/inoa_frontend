@@ -1,15 +1,17 @@
 import React, { FC } from 'react';
 
 interface BadgeProps {
-  color: 'action' | 'danger'
+  color: 'action' | 'danger',
+  onClick?: () => void;
 }
 
 const Badge: FC<BadgeProps> = ({
   color,
-  children
+  children,
+  onClick
 }) => {
   return (
-    <span className={`badge badge-` + color}>
+    <span onClick={onClick} className={`badge badge-` + color}>
       {children}
     </span>
   );

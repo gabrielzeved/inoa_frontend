@@ -6,14 +6,14 @@ import { useStockContext } from "../../contexts/StockContext";
 
 const Graph = () => {
 
-  
-  const {state: {symbol, stockInfo}} = useStockContext();
   const { graphs } = useGraphContext();
 
-  const xAxis = stockInfo?.candle.timestamp?.map((item) => {
+  const xAxis = graphs[0]?.data?.timestamp?.map((item) => {
+
     const date = new Date(item * 1000);
-    return date.toLocaleString('default', { day: "2-digit", month: 'short', year: "numeric" })
-  })
+    return date.toLocaleDateString("pt-BR")
+
+  })|| [];
 
   const options: ApexOptions = {
     chart: {
@@ -35,14 +35,10 @@ const Graph = () => {
   }
 
   const series = [
-    {
-      name: symbol,
-      data: stockInfo?.candle.close || []
-    },
     ...graphs.filter(item => !item.loading && item.data).map((item) => {
       return {
-        name: item.name,
-        data: item.data?.close || []
+        name: item?.name,
+        data: item?.data?.close.map((item) => Number(item?.toFixed(2))) || []
       }
     })
   ]

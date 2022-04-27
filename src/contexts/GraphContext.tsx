@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from "react";
 import InoaService from "../services/InoaService";
 import { StockCandle } from "../typings/stock";
 import { useStockContext } from "./StockContext";
@@ -13,6 +13,7 @@ interface GraphState{
   graphs: StockGraph[],
   addGraph: (term: string) => void,
   removeGraph: (term: string) => void,
+  clearGraphs: () => void
 }
 
 const GraphContext = createContext<GraphState>({} as GraphState);
@@ -20,10 +21,9 @@ const GraphContext = createContext<GraphState>({} as GraphState);
 export const GraphContextProvider : FC = ({children}) => {
   
   const [graphs, setGraphs] = useState<StockGraph[]>([])
-  const {state: {date}} = useStockContext();
+  const {state: {date, interval}} = useStockContext();
 
   const addGraph = async (term: string) => {
-
     if(graphs.some((item) => item.name === term)) return;
 
     setGraphs([...graphs, {
@@ -32,7 +32,11 @@ export const GraphContextProvider : FC = ({children}) => {
       loading: true
     }])
    
-    const data = await InoaService.stockCandle(term, date.from, date.to);
+    if(!date.from || !date.to)
+      return;
+
+    const data = await InoaService.stockCandle(term, date.from, date.to, interval);
+
     setGraphs((prev: StockGraph[]) => {
       return [...prev.map((item) => {
         if(item.name === term){
@@ -47,15 +51,51 @@ export const GraphContextProvider : FC = ({children}) => {
     })
   }
 
+  const reevaluateGraphs = async () => {
+    let graphsCopy = [...graphs];
+    graphsCopy = graphsCopy.map((item) => {
+      return {
+        ...item,
+        loading: true
+      }
+    })
+
+    setGraphs([...graphsCopy])
+
+    graphsCopy = await Promise.all(graphsCopy.map(async (item) => {
+
+      if(!date.from || !date.to)
+        return item;
+
+      const data = await InoaService.stockCandle(item.name, date.from, date.to, interval);
+      return {
+        ...item,
+        loading: false,
+        data: data
+      } as StockGraph
+    }))
+
+    setGraphs([...graphsCopy]);
+  }
+
+  useEffect(() => {
+    reevaluateGraphs();
+  }, [date.from, date.to, interval])
+
   const removeGraph = (term: string) => {
     setGraphs(graphs.filter((item) => item.name !== term))
+  }
+
+  const clearGraphs = () => {
+    setGraphs([]);
   }
 
   return (
     <GraphContext.Provider value={{
       graphs,
       addGraph,
-      removeGraph
+      removeGraph,
+      clearGraphs
     }}>
       {children}
     </GraphContext.Provider>

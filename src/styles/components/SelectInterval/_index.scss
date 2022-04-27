@@ -1,0 +1,29 @@
+.select-interval{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.select-interval-title{
+  margin: 8px 0;
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: $gray-800;
+}
+
+.interval-badge{
+  @extend .badge;
+  color: $gray-800;
+  border:1px solid $gray-200;
+  &:hover{
+    border:1px solid $focus;
+  }
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.interval-badge--active{
+  background-color: $focus;
+  color: white;
+}

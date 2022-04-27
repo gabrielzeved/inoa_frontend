@@ -1,10 +1,12 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useGraphContext } from '../../contexts/GraphContext';
 import { SearchContextProvider, useSearchContext } from '../../contexts/SearchContext';
 import { StockCandle } from '../../typings/stock';
 import Badge from '../Badge';
 import SearchBar from '../SearchBar';
+import SelectInterval from '../SelectInterval';
 
 interface SelectedStocksProps {
 
@@ -12,45 +14,45 @@ interface SelectedStocksProps {
 
 interface RemoveBadgeProps {
   text: string,
+  loading: boolean,
   color: 'action' | 'danger',
   onRemove: () => void
 }
 
 const RemoveBadge = ({
   text,
+  loading,
   onRemove
 } : RemoveBadgeProps) => {
   return (
     <Badge color={"action"}>
       {text}
-      <span onClick={onRemove} className="badge-remove" />
+      {!loading && <span onClick={onRemove} className="badge-remove" />}
+      {loading && <FontAwesomeIcon icon={faSpinner} spin style={{
+        marginLeft: '4px'
+      }} />}
     </Badge>
   )
 }
 
 const SelectedStocks: React.FC = () => {
-
-  const { term } = useSearchContext();
-  const {graphs, addGraph, removeGraph} = useGraphContext();
-
-  const handleSelect = () => {
-    addGraph(term);
-  }
-
+  const {graphs, removeGraph, clearGraphs} = useGraphContext();
+  
   return (
     <>
+      
       <div className="selected-stocks">
         <div className="selected-stocks-badges">
-          <Badge color='danger'>
+          <Badge onClick={clearGraphs} color='danger'>
             LIMPAR
           </Badge>
           {graphs.map((badge) => {
             return (
-              <RemoveBadge color={"action"} text={badge.name} onRemove={() => {removeGraph(badge.name)}} />
+              <RemoveBadge key={badge.name} loading={badge.loading} color={"action"} text={badge.name} onRemove={() => {removeGraph(badge.name)}} />
             )
           })}
         </div>
-        <SearchBar icon={faPlus} onSelect={handleSelect} />      
+        <SelectInterval />   
       </div>
     </>
   );

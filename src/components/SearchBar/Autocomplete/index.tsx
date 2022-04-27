@@ -42,7 +42,7 @@ const Autocomplete = ({
           
           {results && results.slice(0, 10).map((item) => {
             return (
-              <li onClick={() => {onSelect(item)} }className='autocomplete-element'>
+              <li key={item.symbol} onClick={() => {onSelect(item)} }className='autocomplete-element'>
                 <span className='autocomplete-symbol'>{item.symbol}</span>
                 <span className='autocomplete-name'>{item.name}</span>
               </li>

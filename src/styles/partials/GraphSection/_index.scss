@@ -1,7 +1,10 @@
 .selected-stocks-badges{
   .badge{
     height: fit-content;
-    margin: auto 0;
+    margin: auto 0 0;
+  }
+  .badge-danger{
+    cursor: pointer;
   }
 }
 

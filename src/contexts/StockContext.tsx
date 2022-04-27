@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { createContext, Dispatch, useContext, useReducer, useState } from "react";
-import InoaService from "../services/InoaService";
+import InoaService, { Interval } from "../services/InoaService";
 import { StockCandle } from "../typings/stock";
 
 interface StockContextState{
@@ -10,9 +9,10 @@ interface StockContextState{
     candle: StockCandle
   },
   date: {
-    from: Date,
-    to: Date
-  }
+    from: Date | undefined,
+    to: Date | undefined
+  },
+  interval: Interval
 }
 
 type StockContextAction = {
@@ -30,6 +30,9 @@ type StockContextAction = {
 } | {
   type: "SET_SYMBOL",
   value: string
+} | {
+  type: "SET_INTERVAL",
+  value: Interval
 }
 
 interface StockContextValues {
@@ -43,9 +46,10 @@ const initialValues : StockContextState = {
   stockInfo: undefined,
   symbol: "",
   date: {
-    from: new Date(),
-    to: new Date()
-  }
+    from: undefined,
+    to: undefined
+  },
+  interval: "1d"
 }
 
 const StockContext = createContext<StockContextValues>({} as StockContextValues);
@@ -75,6 +79,11 @@ const stockContextReducer = (state : StockContextState, action: StockContextActi
       return {
         ...state,
         symbol: value
+      }
+    case "SET_INTERVAL":
+      return {
+        ...state,
+        interval: value
       }
     default:
       return {
